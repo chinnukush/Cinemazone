@@ -25,30 +25,31 @@ export default function Footer() {
                 This site does not store any file on the server, it only links
                 to media files which are hosted on Telegram.
               </p>
-              <div className="flex items-center gap-3 mt-6 ">
-                <a
-                  href={TG_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <svg
-                    width="100"
-                    height="100"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="cursor-pointer w-8"
-                  >
-                    <path
-                      d="M12,24c6.629,0 12,-5.371 12,-12c0,-6.629 -5.371,-12 -12,-12c-6.629,0 -12,5.371 -12,12c0,6.629 5.371,12 12,12zM5.491,11.74l11.57,-4.461c0.537,-0.194 1.006,0.131 0.832,0.943l0.001,-0.001l-1.97,9.281c-0.146,0.658 -0.537,0.818 -1.084,0.508l-3,-2.211l-1.447,1.394c-0.16,0.16 -0.295,0.295 -0.605,0.295l0.213,-3.053l5.56,-5.023c0.242,-0.213 -0.054,-0.333 -0.373,-0.121l-6.871,4.326l-2.962,-0.924c-0.643,-0.204 -0.657,-0.643 0.136,-0.953z"
-                      fill="#50B498"
-                    />
-                  </svg>
+              <div className="flex items-center justify-center mt-6">
+  <a
+    href={TG_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center gap-2 px-6 py-3 bg-[#0088cc] hover:bg-[#0a7abf] text-white rounded-full shadow-lg transition duration-300"
+  >
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-5 h-5"
+    >
+      <path
+        d="M12,24c6.629,0 12,-5.371 12,-12c0,-6.629 -5.371,-12 -12,-12c-6.629,0 -12,5.371 -12,12c0,6.629 5.371,12 12,12zM5.491,11.74l11.57,-4.461c0.537,-0.194 1.006,0.131 0.832,0.943l0.001,-0.001l-1.97,9.281c-0.146,0.658 -0.537,0.818 -1.084,0.508l-3,-2.211l-1.447,1.394c-0.16,0.16 -0.295,0.295 -0.605,0.295l0.213,-3.053l5.56,-5.023c0.242,-0.213 -0.054,-0.333 -0.373,-0.121l-6.871,4.326l-2.962,-0.924c-0.643,-0.204 -0.657,-0.643 0.136,-0.953z"
+        fill="white"
+      />
+    </svg>
 
-                
-                </a>
-                
-              </div>
-            </div>
+    <span className="font-semibold">
+      Join My Update Channel
+    </span>
+  </a>
+</div>
             {/* RIGHT */}
             <div className="p-0 w-full text-primaryTextColor md:w-1/3 lg:p-6">
               <button className="border-b-2 border-otherColor text-xl cursor-default mb-5 md:text-2xl">
