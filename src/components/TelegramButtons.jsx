@@ -17,13 +17,22 @@ const TelegramButton = ({ movieData }) => {
 
   const shortenUrl = async (url) => {
   try {
-    // Flexible structure for various APIs
-    const response = await axios.get(API_URL, {
-      params: {
-        key: API_KEY,
-        link: url, // Adjust this depending on your API (link/url/etc.)
-      },
-    });
+
+    const shortUrl = `${API_URL}?api=${API_KEY}&url=${encodeURIComponent(url)}`;
+
+    const response = await axios.get(shortUrl);
+
+    if (response.data && response.data.shortenedUrl) {
+      return response.data.shortenedUrl;
+    }
+
+    return shortUrl;
+
+  } catch (error) {
+    console.error("Shortlink error:", error);
+    return url;
+  }
+};
 
     const data = response.data;
 
