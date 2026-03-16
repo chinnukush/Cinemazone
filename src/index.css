@@ -11,7 +11,7 @@
 }
 
 body {
-  background: #000000;
+  background: #0b0b0b;
   color: #ffffff;
 }
 
@@ -55,12 +55,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #E50914;
+  background: #FFD700;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff2c2c;
+  background: #e6c200;
 }
 
 /* Main Loader */
@@ -68,8 +68,8 @@ body {
   width: 20px;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: #E50914;
-  box-shadow: 0 0 0 0 #E50914;
+  background: #FFD700;
+  box-shadow: 0 0 0 0 #FFD700;
   animation: l2 1.5s infinite linear;
   position: relative;
 }
@@ -80,7 +80,7 @@ body {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  box-shadow: 0 0 0 0 #E50914;
+  box-shadow: 0 0 0 0 #FFD700;
   animation: inherit;
   animation-delay: -0.5s;
 }
@@ -91,7 +91,7 @@ body {
 
 @keyframes l2 {
   100% {
-    box-shadow: 0 0 0 40px #E509142f;
+    box-shadow: 0 0 0 40px #FFD7002f;
   }
 }
 
@@ -100,8 +100,8 @@ body {
   width: 10px;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: #E50914;
-  box-shadow: 0 0 0 0 #E50914;
+  background: #FFD700;
+  box-shadow: 0 0 0 0 #FFD700;
   animation: l3 1.5s infinite linear;
   position: relative;
 }
@@ -112,7 +112,7 @@ body {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  box-shadow: 0 0 0 0 #E50914;
+  box-shadow: 0 0 0 0 #FFD700;
   animation: inherit;
   animation-delay: -0.5s;
 }
@@ -123,7 +123,7 @@ body {
 
 @keyframes l3 {
   100% {
-    box-shadow: 0 0 0 30px #E509142f;
+    box-shadow: 0 0 0 30px #FFD7002f;
   }
 }
 
@@ -131,9 +131,10 @@ body {
 .loader-episode {
   width: 40px;
   aspect-ratio: 1;
-  --c: linear-gradient(#E50914 0 0);
-  --r1: radial-gradient(farthest-side at bottom, #E50914 93%, transparent);
-  --r2: radial-gradient(farthest-side at top, #E50914 93%, transparent);
+
+  --c: linear-gradient(#FFD700 0 0);
+  --r1: radial-gradient(farthest-side at bottom, #FFD700 93%, transparent);
+  --r2: radial-gradient(farthest-side at top, #FFD700 93%, transparent);
 
   background:
     var(--c), var(--r1), var(--r2),
