@@ -9,6 +9,7 @@ import { FiSearch } from "react-icons/fi";
 import { VscClose } from "react-icons/vsc";
 import { BiHomeAlt2, BiSolidMovie, BiStar } from "react-icons/bi";
 
+import { PiTelegramLogo } from "react-icons/pi";
 import { BsTv } from "react-icons/bs";
 import posterPlaceholder from "../assets/images/poster-placeholder.png";
 // import UserInfoBtn from "./Logout";
@@ -208,6 +209,16 @@ export default function Nav() {
               )}
             </AnimatePresence>
           </div>
+
+          <a
+  href="https://t.me/Hari_Moviez"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="hidden md:flex items-center gap-2 bg-[#229ED9] text-white px-4 py-2 rounded-full text-sm font-semibold hover:opacity-90 transition"
+>
+  <PiTelegramLogo className="text-lg" />
+  Join Telegram
+</a>
           {/* Search Form */}
           <form
             onSubmit={(e) => {
