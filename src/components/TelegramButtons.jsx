@@ -22,28 +22,15 @@ const TelegramButton = ({ movieData }) => {
 
     const response = await axios.get(shortUrl);
 
-    if (response.data && response.data.shortenedUrl) {
-      return response.data.shortenedUrl;
-    }
+    const data = response.data;
 
-    return shortUrl;
+    return data?.shortenedUrl || data?.short || data?.url || shortUrl;
 
   } catch (error) {
     console.error("Shortlink error:", error);
     return url;
   }
 };
-
-    const data = response.data;
-
-    // Adjust this based on expected field in your API response
-    return data?.shortenedUrl || data?.short || data?.url || url;
-  } catch (error) {
-    console.error("Error shortening URL:", error);
-    return url;
-  }
-};
-
 
   const handleButtonClick = async (originalUrl, quality) => {
     setLoading((prev) => ({ ...prev, [quality]: true }));
