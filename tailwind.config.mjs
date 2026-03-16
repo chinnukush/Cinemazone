@@ -21,23 +21,36 @@ export default {
       xl: "1440px",
       xxl: "1600px",
     },
+
     extend: {
       fontFamily: {
         Anton: ["Anton", ...defaultTheme.fontFamily.sans],
       },
+
       colors: {
+        /* Text Colors */
         primaryTextColor: "#ffffff",
-        secondaryTextColor: "#FFFFFFB2",
-        primaryBtn: "#50B498",
-        primaryBtnHower: "#2ca0a0",
-        bgColor: "#000000",
-        bgColorSecondary: "#333333",
-        btnColor: "#1f1f1f",
-        otherColor: "#50B498",
+        secondaryTextColor: "#d1d5db",
+
+        /* Cinematic Accent Color (Cinema Gold) */
+        primaryBtn: "#FFD700",
+        primaryBtnHower: "#e6c200",
+
+        /* Background Colors */
+        bgColor: "#0b0b0b",
+        bgColorSecondary: "#1a1a1a",
+
+        /* Card / Button Background */
+        btnColor: "#121212",
+
+        /* Highlight Color */
+        otherColor: "#FFD700",
       },
+
       aspectRatio: {
         "9/13": "9/13",
       },
+
       fontSize: {
         sm: "0.8rem",
         base: "1rem",
@@ -54,6 +67,8 @@ export default {
       },
     },
   },
+
   darkMode: "class",
+
   plugins: [nextui()],
 };
