@@ -269,7 +269,7 @@ html.light ::-webkit-scrollbar-thumb:hover {
 
 /* Force all text to dark */
 html.light * {
-  color: #000 !important;
+  color: #e88915 !important;
 }
 
 /* Keep accent colors */
@@ -285,7 +285,7 @@ html.light .text-secondaryTextColor {
 /* Buttons / badges text fix */
 html.light .bg-btnColor,
 html.light .bg-black {
-  color: #000 !important;
+  color: #e88915 !important;
 }
 
 /* Search placeholder */
