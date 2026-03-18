@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/black-and-white.css";
 
 import { FiSearch } from "react-icons/fi";
-import { VscClose } from "react-icons/vsc";
-import { BiHomeAlt2, BiSolidMovie } from "react-icons/bi";
+import { BiHomeAlt2, BiSolidMovie, BiStar } from "react-icons/bi";
 import { BsTv } from "react-icons/bs";
 
 import posterPlaceholder from "../assets/images/poster-placeholder.png";
@@ -21,25 +19,21 @@ export default function Nav() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [navStatus, setNavStatus] = useState("Home");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const [theme, setTheme] = useState("dark");
 
   const location = useLocation();
   const closeSearchResultsDropDown = useRef();
-  const closeMobileMenu = useRef();
 
-  // 🌙 LOAD THEME
+  // 🌙 THEME LOAD
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "dark";
     setTheme(savedTheme);
-
     if (savedTheme === "light") {
       document.documentElement.classList.add("light");
     }
   }, []);
 
-  // 🌙 TOGGLE THEME
+  // 🌙 TOGGLE
   const toggleTheme = () => {
     if (theme === "dark") {
       document.documentElement.classList.add("light");
@@ -68,7 +62,7 @@ export default function Nav() {
     return () => clearTimeout(timer);
   }, [query]);
 
-  // 🔥 SEARCH API CALL (MAIN FIX)
+  // 🔥 SEARCH API (OLD WORKING LOGIC)
   useEffect(() => {
     if (debouncedVal.trim() === "") {
       setSearchResult([]);
@@ -83,13 +77,10 @@ export default function Nav() {
         setSearchResult(data.results || []);
         setIsLoading(false);
       })
-      .catch((err) => {
-        console.error("Search error:", err);
-        setIsLoading(false);
-      });
+      .catch(() => setIsLoading(false));
   }, [debouncedVal]);
 
-  // 🔥 CLOSE SEARCH DROPDOWN
+  // 🔥 CLOSE DROPDOWN
   useEffect(() => {
     const handler = (e) => {
       if (
@@ -105,100 +96,97 @@ export default function Nav() {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  // MOBILE MENU CLOSE
-  useEffect(() => {
-    const handler = (e) => {
-      if (
-        closeMobileMenu.current &&
-        !closeMobileMenu.current.contains(e.target)
-      ) {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handler);
-    document.addEventListener("scroll", handler);
-
-    return () => {
-      document.removeEventListener("mousedown", handler);
-      document.removeEventListener("scroll", handler);
-    };
-  }, []);
-
   return (
-    <>
-      <div className="fixed flex items-center justify-between gap-3 z-20 bg-bgColor/60 backdrop-blur-md top-0 left-0 right-0 py-4 px-5 md:px-10 text-white">
+    <div className="fixed flex items-center justify-between gap-3 z-20 bg-bgColor/60 backdrop-blur-md top-0 left-0 right-0 py-4 px-5 md:px-10 text-white">
 
-        {/* LEFT */}
-        <div className="flex items-center gap-3">
-          <div className="bg-black px-3 py-1 rounded-lg font-bold uppercase">
-            cz
-          </div>
-
-          <button
-            onClick={toggleTheme}
-            className="w-14 h-7 flex items-center bg-gray-700 rounded-full p-1"
-          >
-            <div
-              className={`bg-white w-5 h-5 rounded-full transition ${
-                theme === "light" ? "translate-x-7" : ""
-              }`}
-            />
-          </button>
+      {/* LEFT */}
+      <div className="flex items-center gap-3">
+        <div className="bg-black px-3 py-1 rounded-lg font-bold uppercase">
+          cz
         </div>
 
-        {/* SITENAME */}
-        <Link to="/" className="hidden md:block font-bold text-xl">
-          {SITENAME}
-        </Link>
-
-        {/* NAV */}
-        <nav className="hidden md:flex gap-6">
-          <Link to="/">Home</Link>
-          <Link to="/movies">Movies</Link>
-          <Link to="/series">Series</Link>
-        </nav>
-
-        {/* SEARCH */}
-        <div
-          className="relative w-full md:w-1/3"
-          ref={closeSearchResultsDropDown}
+        <button
+          onClick={toggleTheme}
+          className="w-14 h-7 flex items-center bg-gray-700 rounded-full p-1"
         >
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search movies..."
-            className="w-full py-2 px-4 bg-btnColor rounded-md"
+          <div
+            className={`bg-white w-5 h-5 rounded-full transition ${
+              theme === "light" ? "translate-x-7" : ""
+            }`}
           />
-          <FiSearch className="absolute right-3 top-3" />
-
-          {/* 🔥 RESULTS */}
-          {query && (
-            <div className="absolute top-12 w-full bg-black rounded-lg p-3 max-h-80 overflow-y-auto z-50">
-              {isLoading ? (
-                <p>Loading...</p>
-              ) : searchResult.length > 0 ? (
-                searchResult.map((item, i) => (
-                  <Link
-                    key={i}
-                    to={`/movie/${item.id}`}
-                    className="flex items-center gap-3 p-2 hover:bg-gray-800 rounded"
-                  >
-                    <img
-                      src={item.poster || posterPlaceholder}
-                      className="w-10 h-14 object-cover rounded"
-                    />
-                    <p>{item.title}</p>
-                  </Link>
-                ))
-              ) : (
-                <p>No results found</p>
-              )}
-            </div>
-          )}
-        </div>
+        </button>
       </div>
-    </>
+
+      {/* SITENAME */}
+      <Link to="/" className="hidden md:block font-bold text-xl">
+        {SITENAME}
+      </Link>
+
+      {/* NAV */}
+      <nav className="hidden md:flex gap-6">
+        <Link to="/">Home</Link>
+        <Link to="/mov">Movies</Link>
+        <Link to="/ser">Series</Link>
+      </nav>
+
+      {/* SEARCH */}
+      <div
+        className="relative w-full md:w-1/3"
+        ref={closeSearchResultsDropDown}
+      >
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search movies..."
+          className="w-full py-2 px-4 bg-btnColor rounded-md"
+        />
+
+        <FiSearch className="absolute right-3 top-3" />
+
+        {/* 🔥 SEARCH RESULTS */}
+        {debouncedVal && (
+          <div className="absolute top-12 w-full bg-black rounded-lg p-3 max-h-80 overflow-y-auto z-50">
+
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : searchResult.length > 0 ? (
+              searchResult.map((item) => (
+                <Link
+                  key={item.tmdb_id}
+                  to={
+                    item.media_type === "movie"
+                      ? `/mov/${item.tmdb_id}`
+                      : `/ser/${item.tmdb_id}`
+                  }
+                  className="flex items-center gap-3 p-2 hover:bg-gray-800 rounded"
+                  onClick={() => setQuery("")}
+                >
+                  <LazyLoadImage
+                    src={item.poster || posterPlaceholder}
+                    className="w-10 h-14 object-cover rounded"
+                  />
+
+                  <div>
+                    <p>{item.title}</p>
+
+                    <div className="flex items-center gap-2 text-xs text-gray-400">
+                      {item.rating && (
+                        <span className="flex items-center gap-1">
+                          <BiStar /> {item.rating.toFixed(1)}
+                        </span>
+                      )}
+                      {item.release_year && <span>{item.release_year}</span>}
+                    </div>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <p>No results found</p>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
