@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/black-and-white.css";
 
 import { FiSearch } from "react-icons/fi";
+import { VscClose } from "react-icons/vsc";
 import { BiHomeAlt2, BiSolidMovie, BiStar } from "react-icons/bi";
 import { BsTv } from "react-icons/bs";
 
@@ -19,21 +20,24 @@ export default function Nav() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [navStatus, setNavStatus] = useState("Home");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const [theme, setTheme] = useState("dark");
 
   const location = useLocation();
-  const closeSearchResultsDropDown = useRef();
+  const searchRef = useRef();
+  const mobileRef = useRef();
 
-  // 🌙 LOAD THEME
+  // 🌙 THEME LOAD
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "dark";
-    setTheme(savedTheme);
-    if (savedTheme === "light") {
+    const saved = localStorage.getItem("theme") || "dark";
+    setTheme(saved);
+    if (saved === "light") {
       document.documentElement.classList.add("light");
     }
   }, []);
 
-  // 🌙 TOGGLE THEME
+  // 🌙 TOGGLE
   const toggleTheme = () => {
     if (theme === "dark") {
       document.documentElement.classList.add("light");
@@ -46,7 +50,7 @@ export default function Nav() {
     }
   };
 
-  // 📍 NAV ACTIVE STATUS
+  // 📍 ACTIVE NAV
   useEffect(() => {
     const path = location.pathname;
     if (path === "/") setNavStatus("Home");
@@ -54,7 +58,7 @@ export default function Nav() {
     else if (path.startsWith("/ser")) setNavStatus("Series");
   }, [location.pathname]);
 
-  // ⏳ DEBOUNCE SEARCH
+  // ⏳ DEBOUNCE
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedVal(query);
@@ -64,7 +68,7 @@ export default function Nav() {
 
   // 🔍 SEARCH API
   useEffect(() => {
-    if (debouncedVal.trim() === "") {
+    if (!debouncedVal.trim()) {
       setSearchResult([]);
       return;
     }
@@ -80,31 +84,39 @@ export default function Nav() {
       .catch(() => setIsLoading(false));
   }, [debouncedVal]);
 
-  // ❌ CLOSE SEARCH DROPDOWN
+  // ❌ CLOSE SEARCH
   useEffect(() => {
     const handler = (e) => {
-      if (
-        closeSearchResultsDropDown.current &&
-        !closeSearchResultsDropDown.current.contains(e.target)
-      ) {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
         setQuery("");
-        setSearchResult([]);
       }
     };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
+  // ❌ CLOSE MOBILE MENU
+  useEffect(() => {
+    const handler = (e) => {
+      if (mobileRef.current && !mobileRef.current.contains(e.target)) {
+        setMobileMenuOpen(false);
+      }
+    };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   return (
-    <div className="fixed flex items-center justify-between gap-3 z-20 bg-bgColor/80 backdrop-blur-xl border-b border-white/10 top-0 left-0 right-0 py-4 px-5 md:px-10 text-black dark:text-white">
+    <div className="fixed flex items-center justify-between z-50 bg-bgColor/80 backdrop-blur-lg top-0 left-0 right-0 py-4 px-5 md:px-10">
 
-      {/* 🔥 LEFT (LOGO + THEME) */}
+      {/* 🔥 LEFT */}
       <div className="flex items-center gap-3">
+        {/* LOGO */}
         <div className="bg-black text-white px-3 py-1 rounded-lg font-bold uppercase">
           cz
         </div>
 
+        {/* THEME SWITCH */}
         <button
           onClick={toggleTheme}
           className="w-14 h-7 flex items-center bg-gray-700 rounded-full p-1"
@@ -118,51 +130,63 @@ export default function Nav() {
       </div>
 
       {/* 🏷 SITENAME */}
-      <Link to="/" className="hidden md:block font-bold text-xl">
+      <Link to="/" className="hidden md:block text-xl font-bold">
         {SITENAME}
       </Link>
 
-      {/* 📌 NAV MENU */}
-      <nav className="flex gap-6 text-sm md:text-base">
+      {/* 📌 DESKTOP NAV */}
+      <nav className="hidden md:flex gap-6">
         <Link
           to="/"
-          className={`flex items-center gap-1 ${
-            navStatus === "Home"
-              ? "text-otherColor font-semibold"
-              : "hover:text-otherColor"
-          }`}
+          className={navStatus === "Home" ? "text-otherColor" : ""}
         >
-          <BiHomeAlt2 /> Home
+          <BiHomeAlt2 />
         </Link>
 
         <Link
           to="/mov"
-          className={`flex items-center gap-1 ${
-            navStatus === "Movies"
-              ? "text-otherColor font-semibold"
-              : "hover:text-otherColor"
-          }`}
+          className={navStatus === "Movies" ? "text-otherColor" : ""}
         >
-          <BiSolidMovie /> Movies
+          <BiSolidMovie />
         </Link>
 
         <Link
           to="/ser"
-          className={`flex items-center gap-1 ${
-            navStatus === "Series"
-              ? "text-otherColor font-semibold"
-              : "hover:text-otherColor"
-          }`}
+          className={navStatus === "Series" ? "text-otherColor" : ""}
         >
-          <BsTv /> Series
+          <BsTv />
         </Link>
       </nav>
 
+      {/* 📱 MOBILE MENU */}
+      <div className="md:hidden" ref={mobileRef}>
+        <div onClick={() => setMobileMenuOpen(true)} className="cursor-pointer">
+          ☰
+        </div>
+
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ y: -50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 50, opacity: 0 }}
+              className="absolute top-14 right-5 bg-black text-white p-5 rounded-xl"
+            >
+              <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link><br />
+              <Link to="/mov" onClick={() => setMobileMenuOpen(false)}>Movies</Link><br />
+              <Link to="/ser" onClick={() => setMobileMenuOpen(false)}>Series</Link>
+
+              <VscClose
+                className="absolute top-2 right-2 text-xl cursor-pointer"
+                onClick={() => setMobileMenuOpen(false)}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
       {/* 🔍 SEARCH */}
-      <div
-        className="relative w-full md:w-1/3"
-        ref={closeSearchResultsDropDown}
-      >
+      <div className="relative w-full md:w-1/3" ref={searchRef}>
         <input
           type="text"
           value={query}
@@ -176,7 +200,6 @@ export default function Nav() {
         {/* RESULTS */}
         {debouncedVal && (
           <div className="absolute top-12 w-full bg-black text-white rounded-lg p-3 max-h-80 overflow-y-auto z-50">
-
             {isLoading ? (
               <p>Loading...</p>
             ) : searchResult.length > 0 ? (
@@ -199,7 +222,7 @@ export default function Nav() {
                   <div>
                     <p>{item.title}</p>
 
-                    <div className="flex items-center gap-2 text-xs text-gray-400">
+                    <div className="flex gap-2 text-xs text-gray-400">
                       {item.rating && (
                         <span className="flex items-center gap-1">
                           <BiStar /> {item.rating.toFixed(1)}
@@ -218,4 +241,4 @@ export default function Nav() {
       </div>
     </div>
   );
-}
+          }
