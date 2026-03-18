@@ -269,7 +269,7 @@ html.light ::-webkit-scrollbar-thumb:hover {
 
 /* Force all text to dark */
 html.light * {
-  color: #ffa31a !important;
+  color: #ff00ff !important;
 }
 
 /* Keep accent colors */
