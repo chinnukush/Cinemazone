@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* RESET */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -10,6 +11,7 @@
   scroll-behavior: smooth;
 }
 
+/* DEFAULT DARK MODE */
 body {
   background: #0b0b0b;
   color: #ffffff;
@@ -20,11 +22,12 @@ body {
   mask-image: linear-gradient(to top, transparent, #121212);
 }
 
+/* Modal animation */
 .modal {
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-/* Video player style */
+/* Video player */
 #player {
   transition: transform 0.3s ease;
 }
@@ -44,7 +47,7 @@ body {
   }
 }
 
-/* Scrollbar */
+/* Scrollbar (Dark) */
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
@@ -62,6 +65,10 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #e6c200;
 }
+
+/* ========================= */
+/* LOADERS */
+/* ========================= */
 
 /* Main Loader */
 .loader {
@@ -145,25 +152,6 @@ body {
   animation: l4 1s infinite alternate;
 }
 
-/* LIGHT MODE */
-html.light {
-  background: #ffffff;
-  color: #000000;
-}
-
-html.light body {
-  background: #ffffff;
-  color: #000000;
-}
-
-/* Fix cards / sections */
-html.light .bg-black {
-  background: #f1f1f1 !important;
-  color: #000 !important;
-}
-
-/* Codes added */
-
 @keyframes l4 {
   0%,25% {
     background-size: 8px 0, 8px 4px, 8px 4px,
@@ -208,4 +196,71 @@ html.light .bg-black {
       50% 50%, 50% calc(0% - 2px), 50% calc(100% + 2px),
       100% 50%, 100% calc(0% - 2px), 100% calc(100% + 2px);
   }
+}
+
+/* ========================= */
+/* 🌞 LIGHT MODE (FINAL FIX) */
+/* ========================= */
+
+html.light {
+  background: #ffffff;
+  color: #000000;
+}
+
+html.light body {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* Navbar / glass */
+html.light .bg-bgColor {
+  background: #f5f5f5 !important;
+}
+
+html.light .bg-bgColor\/60 {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* Buttons / inputs */
+html.light .bg-btnColor {
+  background: #e5e5e5 !important;
+}
+
+html.light .bg-btnColor\/70 {
+  background: #e5e5e5 !important;
+}
+
+/* Text */
+html.light .text-secondaryTextColor {
+  color: #555 !important;
+}
+
+html.light .text-otherColor {
+  color: #ff3d3d !important;
+}
+
+/* Cards */
+html.light .bg-black {
+  background: #f1f1f1 !important;
+  color: #000 !important;
+}
+
+/* Inputs */
+html.light input {
+  background: #ffffff !important;
+  color: #000 !important;
+}
+
+/* Scrollbar (Light) */
+html.light ::-webkit-scrollbar-track {
+  background: #eee;
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  background: #bbb;
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #999;
 }
