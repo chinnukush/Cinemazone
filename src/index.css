@@ -264,3 +264,36 @@ html.light ::-webkit-scrollbar-thumb {
 html.light ::-webkit-scrollbar-thumb:hover {
   background: #999;
 }
+
+/* 🔥 FIX TEXT VISIBILITY IN LIGHT MODE */
+
+/* Force all text to dark */
+html.light * {
+  color: #000 !important;
+}
+
+/* Keep accent colors */
+html.light .text-otherColor {
+  color: #ff3d3d !important;
+}
+
+/* Secondary text */
+html.light .text-secondaryTextColor {
+  color: #555 !important;
+}
+
+/* Buttons / badges text fix */
+html.light .bg-btnColor,
+html.light .bg-black {
+  color: #000 !important;
+}
+
+/* Search placeholder */
+html.light input::placeholder {
+  color: #777 !important;
+}
+
+
+
+
+
