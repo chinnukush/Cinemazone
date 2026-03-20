@@ -325,7 +325,7 @@ html.light ::-webkit-scrollbar-track {
 }
 
 html.light ::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: #595959;
 }
 
 html.light ::-webkit-scrollbar-thumb:hover {
