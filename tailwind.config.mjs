@@ -41,7 +41,7 @@ export default {
         bgColorSecondary: "#1a1a1a",
 
         /* Card / Button Background */
-        btnColor: "#121212",
+        btnColor: "#FFD700",
 
         /* Highlight Color */
         otherColor: "#FFD700",
